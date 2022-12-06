@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Models\Dono;
+use App\Models\Peso;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,9 +56,17 @@ Route::put('editar-animal/{animalId}', function (Request $info, $animalId){
     $animal = Animal::findOrFail($animalId);
     $animal->donoId = $info->donoId;
     $animal->tagAnimal = $info->tagAnimal;
-    $animal->peso = $info->peso;
+//    $animal->peso = $info->peso;
+//    Não se edita o peso
     $animal->preco = $info->preco;
     $animal->save();
+
+    Animal::create([
+            'animalId' => $animal->id,
+            'peso' => $animal->peso,
+        ]
+    );
+
     echo "Animal atualizado";
 });
 
@@ -121,4 +131,32 @@ Route::get('excluir-dono/{donoId}',function ($donoId) {
     echo "Dono deletado com sucesso";
 });
 
+// --------------------------------------------------------------
+//FIM DO DONO
+//----------------------------------------------------
 
+// ------------------------------------------
+//INICIO DO PESO
+// ------------------------------
+
+
+Route::get('/cadastrar-dono', function () {
+    return view('cadastro-dono');
+});
+
+Route::post('/cadastrar-peso',function (Request $request ){
+//    dd($request->all());
+    Peso::create([
+            'idAnimal' => $request->idAnimal,
+            'peso' => $request->peso,
+        ]
+    );
+    echo "Peso cadastrado com sucesso";
+});
+
+Route::get('excluir-peso/{pesoId}',function ($pesoId) {
+//    dd($donoId);
+    $peso = Peso::findOrFail($pesoId);
+    $peso->delete();
+    echo "Peso deletado com sucesso";
+});
