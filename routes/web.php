@@ -20,6 +20,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/cadastrar-animal', function () {
+    return view('cadastro-animal');
+});
+
 Route::post('/cadastrar-animal',function (Request $request ){
 //    dd($request->all());
     Animal::create([
@@ -72,6 +76,9 @@ Route::get('excluir-animal/{animalId}',function ($donoId) {
 //INICIO DO DONO
 // ------------------------------
 
+Route::get('/cadastrar-dono', function () {
+    return view('cadastro-dono');
+});
 
 Route::post('/cadastrar-dono',function (Request $request ){
 //    dd($request->all());
@@ -98,8 +105,8 @@ Route::get ('editar-dono/{donoId}', function ($donoId){
     return view('editar-dono',['dono' => $dono]);
 });
 
-Route::put('editar-animal/{animalId}', function (Request $info, $animalId){
-    $dono = Dono::findOrFail($animalId);
+Route::put('editar-dono/{donoId}', function (Request $info, $donoId){
+    $dono = Dono::findOrFail($donoId);
     $dono->nome = $info->nome;
     $dono->cpf = $info->cpf;
     $dono->endereco = $info->endereco;
@@ -107,9 +114,9 @@ Route::put('editar-animal/{animalId}', function (Request $info, $animalId){
     echo "Dono atualizado";
 });
 
-Route::get('excluir-dono/{animalId}',function ($donoId) {
+Route::get('excluir-dono/{donoId}',function ($donoId) {
 //    dd($donoId);
-    $dono = Animal::findOrFail($donoId);
+    $dono = Dono::findOrFail($donoId);
     $dono->delete();
     echo "Dono deletado com sucesso";
 });
