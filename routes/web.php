@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Animal;
+use App\Models\Dono;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ echo "Animal criado com sucesso";
 
 Route::get('buscar-animais/{donoId}', function ($donoId){
 //    dd($donoId);
-    $animal =  Animal::find($donoId);
+    $animal =  Animal::findOrFail($donoId);
     echo "Tag";
     echo "<br>";
     echo $animal->tagAnimal;
@@ -41,7 +42,7 @@ Route::get('buscar-animais/{donoId}', function ($donoId){
 
 Route::get ('editar-animal/{donoId}', function ($donoId){
 //    dd($donoId);
-    $animal =  Animal::find($donoId);
+    $animal =  Animal::findOrFail($donoId);
     return view('editar-animal',['animal' => $animal]);
 });
 
@@ -61,3 +62,56 @@ Route::get('excluir-animal/{animalId}',function ($donoId) {
     $animal->delete();
     echo "Animal deletado com sucesso";
 });
+
+
+// --------------------------------------------------------------
+//FIM DO ANIMAL
+//----------------------------------------------------
+
+// ------------------------------------------
+//INICIO DO DONO
+// ------------------------------
+
+
+Route::post('/cadastrar-dono',function (Request $request ){
+//    dd($request->all());
+    Dono::create([
+            'nome' => $request->nome,
+            'cpf' => $request->cpf,
+            'endereco' => $request->endereco,
+        ]
+    );
+    echo "Dono criado com sucesso";
+});
+
+Route::get('buscar-dono/{donoId}', function ($donoId){
+//    dd($donoId);
+    $dono =  Dono::findOrFail($donoId);
+    echo "Nome";
+    echo "<br>";
+    echo $dono->nome;
+});
+
+Route::get ('editar-dono/{donoId}', function ($donoId){
+//    dd($donoId);
+    $dono =  Dono::findOrFail($donoId);
+    return view('editar-dono',['dono' => $dono]);
+});
+
+Route::put('editar-animal/{animalId}', function (Request $info, $animalId){
+    $dono = Dono::findOrFail($animalId);
+    $dono->nome = $info->nome;
+    $dono->cpf = $info->cpf;
+    $dono->endereco = $info->endereco;
+    $dono->save();
+    echo "Dono atualizado";
+});
+
+Route::get('excluir-dono/{animalId}',function ($donoId) {
+//    dd($donoId);
+    $dono = Animal::findOrFail($donoId);
+    $dono->delete();
+    echo "Dono deletado com sucesso";
+});
+
+
