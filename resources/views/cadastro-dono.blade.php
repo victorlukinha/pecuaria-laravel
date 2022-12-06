@@ -10,25 +10,25 @@
 <body>
 
 
-<form action="/editar-dono/{{ $dono->id }}" method="POST">
+<form action="/cadastrar-dono" method="POST">
 
     @csrf
-    @method("PUT")
     <label for="">Nome</label>
     <br>
-    <input type="text" name="nome" id="nome" value="{{$dono->nome}}">
+    <input type="text" name="nome" id="nome" >
     <br>
 
     <label for="">CPF</label>
     <br>
-    <input type="text" name="cpf" id="cpf" value="{{$dono->cpf}}">
+    <input type="text" name="cpf" id="cpf" >
     <br>
 
     <label for="">Endereço</label>
     <br>
-    <input type="text" name="endereco" id="endereco" value="{{$dono->endereco}}">
-    <br>
+    <input type="text" name="endereco" id="endereco" >
 
+
+    <br>
     <br>
     <input type="submit" value="Enviar">
     <br>
